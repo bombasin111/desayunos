@@ -1,0 +1,29 @@
+{
+  "STAR": {
+    "imagenes": [
+      "star_1.jpg",
+      "star_2.jpg",
+      "star_3.jpg"
+    ],
+    "precio": 120,
+    "imagen_menu": "menu_star.jpg"
+  },
+  "VIP": {
+    "precio": 150,
+    "imagenes": [
+      "vip_1.jpg",
+      "vip_2.jpg",
+      "vip_3.jpg"
+    ],
+    "imagen_menu": "menu_vip.jpg"
+  },
+  "DETALLE": {
+    "precio": 200,
+    "imagenes": [
+      "detalle_1.jpg",
+      "detalle_2.jpg",
+      "detalle_3.jpg"
+    ],
+    "imagen_menu": "menu_detalle.jpg"
+  }
+}

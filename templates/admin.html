@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Bienvenida Jimeee</h1>
+    
+    <div class="d-grid gap-3 col-md-6 mx-auto">
+        <!-- Botones para editar cada desayuno -->
+        <a href="{{ url_for('editar_star') }}" class="btn btn-outline-primary btn-lg">STAR</a>
+        <a href="{{ url_for('editar_vip') }}" class="btn btn-outline-success btn-lg">VIP</a>
+        <a href="{{ url_for('editar_detalle') }}" class="btn btn-outline-warning btn-lg">Con DETALLE</a>
+        
+        <!-- Botón de logout -->
+        <a href="{{ url_for('logout') }}" class="btn btn-danger mt-5">Cerrar Sesión</a>
+    </div>
+</div>
+{% endblock %}

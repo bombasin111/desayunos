@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4 rosado-int">✨ Desayunos Martina ✨</h1>
+    <br><br><br>
+    <!-- Cards de desayunos -->
+    <div class="row">
+        {% for tipo, desayuno in desayunos.items() %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 border-0 shadow">
+                <!-- Carrusel de imágenes -->
+                <div id="carousel{{ loop.index }}" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        {% for img in desayuno.imagenes %}
+                        <div class="carousel-item {% if loop.first %}active{% endif %}">
+                            <img 
+                                src="{{ url_for('static', filename='img/' + tipo.lower() + '/' + img) }}" 
+                                class="d-block w-100 img-card" 
+                                style="height: 500px; object-fit: cover;"
+                            >
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carousel{{ loop.index }}" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon"></span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carousel{{ loop.index }}" data-bs-slide="next">
+                        <span class="carousel-control-next-icon"></span>
+                    </button>
+                </div>
+
+                <div class="card-body text-center">
+                    <h3 class="card-title">{{ desayuno.nombre }}</h3>
+                    
+                    <!-- Menú y precio -->
+                    <div class="mt-3">
+                        <img 
+                            src="{{ url_for('static', filename='img/' + tipo.lower() + '/' + desayuno.imagen_menu) }}" 
+                            class="img-fluid rounded mb-2" 
+                            style="max-height: 450px;"
+                        >
+                        <p class="fs-4 text-danger">Precio Bs. {{ desayuno.precio | int}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+    .img-card {
+        border-radius: 10px 10px 0 0;
+    }
+    .card:hover {
+        transform: translateY(-5px);
+        transition: all 0.3s ease;
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Desayunos Martina</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <style>
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background-image: url('{{ url_for("static", filename="img/fondo.jpg") }}');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            filter: blur(5px);
+            z-index: -1;
+        }
+
+        body {
+            margin: 0;
+            padding-top: 70px;
+            padding-bottom: 60px;
+            position: relative;
+            z-index: 0;
+        }
+
+        .navbar-custom {
+            background-color: rgba(200, 159, 247, 0.4);
+            backdrop-filter: blur(8px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: rgba(209, 249, 251, 0.4);
+            backdrop-filter: blur(8px);
+            text-align: center;
+            padding: 10px 0;
+            font-size: 0.9em;
+            box-shadow: 0 -1px 5px rgba(0,0,0,0.1);
+        }
+
+        .img-fluid.rounded.mb-2 {
+            filter: blur(0.2px);
+        }
+
+        .rosado-int {
+            color: #f84aa1;
+            text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.7);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Barra superior -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top navbar-custom">
+        <div class="container-fluid justify-content-between">
+            <a href="/" class="btn btn-outline-primary btn-sm">Inicio</a>
+            <span id="titulo-navbar" class="navbar-brand mx-auto fw-bold">Desayunos Martina</span>
+            <a href="javascript:history.back()" class="btn btn-outline-danger btn-sm">Volver</a>
+        </div>
+    </nav>
+
+    <div class="fondo-blur py-4 px-3">
+        <div class="container">
+            {% block contenido %}{% endblock %}
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        © {{ now.year }} Desayunos Martina. Todos los derechos reservados.
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+    document.getElementById('titulo-navbar').addEventListener('dblclick', () => {
+        Swal.fire({
+            title: 'Ingrese sus datos',
+            html:
+                `<input type="text" id="usuario" class="swal2-input" placeholder="Usuario">
+                <input type="password" id="contrasena" class="swal2-input" placeholder="Contraseña">`,
+            confirmButtonText: 'Enviar',
+            preConfirm: () => {
+                const usuario = Swal.getPopup().querySelector('#usuario').value;
+                const contrasena = Swal.getPopup().querySelector('#contrasena').value;
+                if (!usuario || !contrasena) {
+                    Swal.showValidationMessage('Por favor ingrese usuario y contraseña');
+                    return false;
+                }
+                return { usuario, contrasena };
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Enviar datos al servidor via POST
+                fetch('/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: `usuario=${encodeURIComponent(result.value.usuario)}&contrasena=${encodeURIComponent(result.value.contrasena)}`
+                }).then(response => {
+                    if (response.redirected) {
+                        window.location.href = response.url;
+                    }
+                });
+            }
+        });
+    });
+</script>
+</body>
+</html>
