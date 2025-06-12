@@ -22,7 +22,7 @@ def cargar_desayunos():
 # Ruta principal (usa base.html)
 @app.route('/')
 def home():
-    return render_template('base.html')
+    return redirect(url_for('clientes'))
 
 # Ruta para clientes (muestra desayunos)
 def cargar_desayunos():
@@ -190,4 +190,4 @@ def editar_detalle():
     return render_template('editar_detalle.html', desayuno=desayuno)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=int(os.environ.get("PORT", 5000)))
